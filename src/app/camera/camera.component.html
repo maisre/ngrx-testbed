@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="deviceNo">Add Camera</label>
+            <input type="text" id="deviceNo" class="form-control mx-sm-3" [(ngModel)]="newCameraDeviceNo">
+        </div>
+        <button class="btn btn-primary  mx-sm-3" (click)="AddCamera()">Add</button>
+    </div>
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+        A camera already exists with that DeviceNo. Not case sensitive.
+    </div>
+</div>
+    
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Cameras</h1>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let camera of Cameras">{{camera.DeviceNo}}</li>
+        </ul>
+    </div>
+</div>
+

@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-sm-6">
+    <div class="card">
+        <div class="card-title">
+            <h1>Add Assignment</h1>
+        </div>
+        <div class="card-text">
+            <div>
+                <p>Select camera:</p>
+                <ng2-completer [(ngModel)]="selectedCamera" [datasource]="cameraData" [minSearchLength]="0" [openOnFocus]="true" (selected)="onCameraSelect($event)"></ng2-completer>
+                <p class="error-text"  *ngIf="showCameraError">This camera is already assigned to a vehicle.</p>
+            </div>
+            <div>
+                <p>Select Vehicle:</p>
+                <ng2-completer [(ngModel)]="selectedVehicle" [datasource]="vehicleData" [minSearchLength]="0" [openOnFocus]="true" (selected)="onVehicleSelect($event)"></ng2-completer>
+                <p class="error-text" *ngIf="showVehicleError">This vehicle already has a camera assigned to it.</p>
+            </div>
+            <div>
+                <button class="btn btn-primary" (click)="AddAssignment()" [disabled]="disableAdd">Add</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-6">
+        <div class="card">
+        <h5 class="card-title">Filter Assignmnets</h5>
+        <div class="card-text">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label>Camera DeviceNo</label>
+                    <input type="text" class="form-control mx-sm-3" [(ngModel)]="cameraFilter" (change)="FilterChange()">
+                </div>
+                <div class="form-group">
+                    <label>Vehicle Name</label>
+                    <input type="text" class="form-control mx-sm-3" [(ngModel)]="vehicleFilter" (change)="FilterChange()">
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<h1>Existing Assignments</h1>
+<table>
+    <tr>
+        <th>DviceNo</th>
+        <th>Vehicle Name</th>
+        <th>Created</th>
+        <th>Status</th>
+    </tr>
+    <tr *ngFor="let assignment of filteredAssignments">
+        <td>{{assignment.CameraDeviceNo}}</td>
+        <td>{{assignment.VehicleName}}</td>
+        <td>{{assignment.DateCreated | date:'medium'}}</td>
+        <td>
+            <button class="btn btn-danger" *ngIf="!assignment.Deleted"  (click)="DeleteAssignment(assignment.ID)">Delete</button>
+            <p class="deleted" *ngIf="assignment.Deleted">Deleted</p>
+        </td>
+    </tr>
+</table>
+
+
+

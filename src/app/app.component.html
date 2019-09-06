@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand"routerLink="/">Camera Assigner</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/camera" routerLinkActive="active">Cameras</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/vehicle" routerLinkActive="active">Vehicles</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
