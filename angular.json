@@ -120,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "camera-app"
+    }
+  },
+  "defaultProject": "camera-app",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
