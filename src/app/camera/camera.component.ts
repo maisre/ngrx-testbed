@@ -1,40 +1,36 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CameraService } from '../camera.service';
-import { Subscription } from 'rxjs';
-import { Camera } from 'src/models/Camera';
+import { Store, State, select } from '@ngrx/store';
+import { EntityState } from '@ngrx/entity';
+import { Camera } from '../camera.model';
+import { Observable } from 'rxjs';
+import { selectAll } from '../camera.reducer';
+import { AddCamera } from '../camera.actions';
+import { AppState } from '../app-state';
+import { TagPlaceholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.component.html',
-  styleUrls: ['./camera.component.less']
+  styleUrls: ['./camera.component.less']  
 })
-export class CameraComponent implements OnInit, OnDestroy {
-
-  private cameraSub: Subscription;
-  private showError: boolean = false;
-
-  public Cameras: Camera[] = [];
-
+export class CameraComponent {
+  cameras$: Observable<any>;
+  cameras: Camera[];
+  id = 1;
+  deviceNo = "";
   public newCameraDeviceNo: string = '';
-  constructor(private cameraService: CameraService) { }
-
-  ngOnInit() {
-    this.cameraSub = this.cameraService.cameras.subscribe(cameras => {
-      this.Cameras = cameras;
-    })
-  }
-
-  ngOnDestroy(){
-    this.cameraSub.unsubscribe();
+  constructor(private store: Store<AppState>) { 
+    this.store.pipe(
+      select(state => selectAll(state.cameras))
+    ).subscribe(v => {
+      this.cameras = v;
+      this.id = this.cameras.length;
+    });
   }
 
   AddCamera() {
-    if(this.cameraService.DeviceExists(this.newCameraDeviceNo)){
-      this.showError = true;
-      return;
-    }
-    this.showError = false;
-    this.cameraService.AddCamera(this.newCameraDeviceNo);
-    this.newCameraDeviceNo = '';
+    this.id++;
+    this.store.dispatch(new AddCamera({camera: {id: this.id, DeviceNo: this.deviceNo}}))
+    this.deviceNo = "";
   }
 }

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { CameraService } from './camera.service';
 import { VehicleService } from './vehicle.service';
-import { Camera } from 'src/models/Camera';
 import { CameraAssignmentEntity, CameraAssignment } from 'src/models/CameraAssignment';
 import { Vehicle } from 'src/models/Vehicle';
 
@@ -20,16 +18,11 @@ export class AssignmentService {
   private assignmentObservers: any[] = [];
 
   public assignments: Observable<CameraAssignment[]>;
-  private cameraSub: Subscription;
   private vehicleSub: Subscription;
-  private cameras: Camera[] = [];
   private vehicles: Vehicle[] = [];
   
-  constructor(private cameraService: CameraService, private vehicleService: VehicleService) {
-    this.cameraSub = this.cameraService.cameras.subscribe(cams => {
-      this.cameras = cams;
-      this.UpdateAssignments();
-    })
+  constructor(private vehicleService: VehicleService) {
+    
 
     this.vehicleSub = this.vehicleService.vehicles.subscribe(vehs => {
       this.vehicles = vehs;
@@ -58,10 +51,10 @@ export class AssignmentService {
 
   GetDeviceNo(camID: number): string{
     let deviceNo = 'Unknown Camera';
-    this.cameras.forEach(cam => {
-      if(cam.ID == camID)
-        deviceNo = cam.DeviceNo;
-    })
+    // this.cameras.forEach(cam => {
+    //   if(cam.ID == camID)
+    //     deviceNo = cam.DeviceNo;
+    // })
 
     return deviceNo;
   }

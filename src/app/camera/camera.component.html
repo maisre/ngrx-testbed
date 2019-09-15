@@ -2,7 +2,7 @@
     <div class="form-inline">
         <div class="form-group">
             <label for="deviceNo">Add Camera</label>
-            <input type="text" id="deviceNo" class="form-control mx-sm-3" [(ngModel)]="newCameraDeviceNo">
+            <input type="text" id="deviceNo" class="form-control mx-sm-3" [(ngModel)]="deviceNo">
         </div>
         <button class="btn btn-primary  mx-sm-3" (click)="AddCamera()">Add</button>
     </div>
@@ -18,7 +18,7 @@
     </div>
     <div class="card" style="width: 18rem;">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let camera of Cameras">{{camera.DeviceNo}}</li>
+            <li class="list-group-item" *ngFor="let camera of cameras">{{camera.DeviceNo}}</li>
         </ul>
     </div>
 </div>
