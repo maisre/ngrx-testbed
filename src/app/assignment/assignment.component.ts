@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AssignmentService } from '../assignment.service';
-import { CameraAssignment } from 'src/models/CameraAssignment';
 import { Subscription } from 'rxjs';
-import { VehicleService } from '../vehicle.service';
 import { CompleterData, CompleterService } from 'ng2-completer';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { Vehicle } from 'src/models/Vehicle';
+import { CameraAssignment, CameraAssignmentFull } from '../camera-assignment.model';
+import { Vehicle } from '../vehicle.model';
 
 @Component({
   selector: 'app-assignment',
@@ -14,8 +11,8 @@ import { Vehicle } from 'src/models/Vehicle';
 })
 export class AssignmentComponent implements OnInit, OnDestroy {
 
-  private CameraAssignments: CameraAssignment[] = [];
-  private filteredAssignments: CameraAssignment[] = [];
+  private CameraAssignments: CameraAssignmentFull[] = [];
+  private filteredAssignments: CameraAssignmentFull[] = [];
   private vehicles: Vehicle[] = [];
   private assignmentSub: Subscription;
   private vehSub: Subscription;
@@ -33,8 +30,6 @@ export class AssignmentComponent implements OnInit, OnDestroy {
   protected cameraData: CompleterData;
   protected vehicleData: CompleterData;
   constructor(
-    private assignmentSerivce: AssignmentService,
-    private vehicleService: VehicleService,
     private completerService: CompleterService) { 
     }
 
@@ -51,7 +46,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
     if(event && event.originalObject){
       this.selectedVehID = event.originalObject.ID;
       this.CameraAssignments.forEach(a => {
-        if(a.VehicleId == this.selectedVehID && a.Deleted == false)
+        if(a.vehicleId == this.selectedVehID && a.deleted == false)
           error = true;
       })
     }
@@ -66,7 +61,7 @@ export class AssignmentComponent implements OnInit, OnDestroy {
     if(event && event.originalObject){
       this.selectedCamID = event.originalObject.ID;
       this.CameraAssignments.forEach(a => {
-        if(a.CameraId == this.selectedCamID && a.Deleted == false)
+        if(a.cameraId == this.selectedCamID && a.deleted == false)
           error = true;
       })
     }
@@ -91,8 +86,8 @@ export class AssignmentComponent implements OnInit, OnDestroy {
 
   FilterChange(){
     this.filteredAssignments = this.CameraAssignments.filter(a => {
-      let containsCameraString = a.CameraDeviceNo.toLowerCase().includes(this.cameraFilter.toLowerCase());
-      let containsVehicleString = a.VehicleName.toLowerCase().includes(this.vehicleFilter.toLowerCase());
+      let containsCameraString = a.cameraDeviceNo.toLowerCase().includes(this.cameraFilter.toLowerCase());
+      let containsVehicleString = a.vehicleName.toLowerCase().includes(this.vehicleFilter.toLowerCase());
 
       return containsCameraString && containsVehicleString;
     })

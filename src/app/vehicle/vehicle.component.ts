@@ -1,37 +1,34 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { VehicleService } from '../vehicle.service';
-import { Vehicle } from 'src/models/Vehicle';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../app-state';
+import { Vehicle } from '../vehicle.model';
+import { selectAll } from '../vehicle.reducer';
+import { AddVehicle } from '../vehicle.actions';
 
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.less']
 })
-export class VehicleComponent implements OnInit, OnDestroy {
+export class VehicleComponent {
 
-  public Vehicles: Vehicle[] = [];
-  private showError: boolean = false;
+  vehicles: Vehicle[];
+  id: number;
+  newVehicleName: string = '';
   
-  public newVehicleName: string = '';
-  private vehicleSub: Subscription;
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private store: Store<AppState>) {
+    this.store.pipe(
+      select(state => selectAll(state.vehicles))
+    ).subscribe(v => {
+      this.vehicles = v;
+      this.id = this.vehicles.length;
+    });
+   }
 
-  ngOnInit() {
-    this.vehicleSub = this.vehicleService.vehicles.subscribe(vehicles => this.Vehicles = vehicles);
-  }
 
-  ngOnDestroy(){
-    this.vehicleSub.unsubscribe();
-  }
-  
   AddVehicle() {
-    if(this.vehicleService.VehicleExists(this.newVehicleName)){
-      this.showError = true;
-      return;
-    }
-    this.showError = false;
-    this.vehicleService.AddVehicle(this.newVehicleName);
+    this.store.dispatch(new AddVehicle({vehicle: {id: this.id, name: this.newVehicleName}}));
+    this.id++;
     this.newVehicleName = '';
   }
 }

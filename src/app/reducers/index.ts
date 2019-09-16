@@ -7,6 +7,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { reducer as camerReducer } from '../camera.reducer';
+import {reducer as vehicleReducer } from '../vehicle.reducer';
 
 
 export interface State {
@@ -14,7 +15,8 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  cameras: camerReducer
+  cameras: camerReducer,
+  vehicles: vehicleReducer
 };
 
 
