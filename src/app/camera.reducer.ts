@@ -19,10 +19,8 @@ export function reducer(
   action: CameraActions
 ): State {
   
-  console.log('got a call in the reducer', action);
   switch (action.type) {
     case CameraActionTypes.AddCamera: {
-      console.log('in the add cameras', state);
       return adapter.addOne(action.payload.camera, state);
     }
 

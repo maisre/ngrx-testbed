@@ -54,12 +54,12 @@
         <th>Status</th>
     </tr>
     <tr *ngFor="let assignment of filteredAssignments">
-        <td>{{assignment.CameraDeviceNo}}</td>
-        <td>{{assignment.VehicleName}}</td>
-        <td>{{assignment.DateCreated | date:'medium'}}</td>
+        <td>{{assignment.cameraDeviceNo}}</td>
+        <td>{{assignment.vehicleName}}</td>
+        <td>{{assignment.dateCreated | date:'medium'}}</td>
         <td>
             <button class="btn btn-danger" *ngIf="!assignment.Deleted"  (click)="DeleteAssignment(assignment.ID)">Delete</button>
-            <p class="deleted" *ngIf="assignment.Deleted">Deleted</p>
+            <p class="deleted" *ngIf="assignment.deleted">Deleted</p>
         </td>
     </tr>
 </table>

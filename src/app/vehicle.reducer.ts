@@ -20,7 +20,6 @@ export function reducer(
 ): State {
   switch (action.type) {
     case VehicleActionTypes.AddVehicle: {
-      console.log('doing the add');
       return adapter.addOne(action.payload.vehicle, state);
     }
 
